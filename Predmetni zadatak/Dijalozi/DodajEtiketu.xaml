@@ -1,0 +1,67 @@
+﻿<Window x:Class="Predmetni_zadatak.Dijalozi.DodajEtiketu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:Predmetni_zadatak.Dijalozi"
+        xmlns:locals="clr-namespace:Predmetni_zadatak"
+        xmlns:val="clr-namespace:Predmetni_zadatak.Validacija"
+        mc:Ignorable="d"
+        Title="Dodaj etiketu" Height="300" Width="490.5"
+        Icon="/slike/globe48.png"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="MalaIkona" TargetType="Image">
+            <Setter Property="MaxWidth" Value="12"/>
+            <Setter Property="MaxHeight" Value="12"/>
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="locals:Precice.Potvrdi" CanExecute="Potvrdi_CanExecute" Executed="Potvrdi_Executed"></CommandBinding>
+        <CommandBinding Command="locals:Precice.Automatski" CanExecute="Automatski_CanExecute" Executed="Automatski_Executed"></CommandBinding>
+        <CommandBinding Command="locals:Precice.Izlaz" CanExecute="Izlaz_CanExecute" Executed="Izlaz_Executed"></CommandBinding>
+    </Window.CommandBindings>
+
+    <Grid>
+        <Button x:Name="buttonDodaj" Content="Dodaj" HorizontalAlignment="Right" Margin="0,0,102,10" VerticalAlignment="Bottom" Width="76" Command="locals:Precice.Potvrdi"/>
+        <Button x:Name="buttonOdustani" Content="Odustani" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" IsCancel="True"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="24,27,0,0" TextWrapping="Wrap" Text="Oznaka" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxOznaka" HorizontalAlignment="Left" Height="23" Margin="146,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="textBoxOznaka_TextChanged" ToolTip="Jednoznačna oznaka etikete">
+            <TextBox.Text>
+                <Binding Path="Oznaka" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:StringValidation ValidationStep="RawProposedValue"/>
+                        <val:JedinstvenaOznakaEtiketaValidation ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="24,62,0,0" TextWrapping="Wrap" Text="Boja" VerticalAlignment="Top"/>
+        <xctk:ColorPicker Name="colorPicker" Margin="146,62,0,182" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ToolTip="Boja koja vizuelno predstavlja etiketu"></xctk:ColorPicker>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="24,120,0,0" TextWrapping="Wrap" Text="Opis" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxOpis" HorizontalAlignment="Left" Height="79" Margin="146,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" ToolTip="Dodatne informacije o etiketi"/>
+        <Button x:Name="buttonAutomatizacija" HorizontalAlignment="Left" Margin="24,0,0,10" VerticalAlignment="Bottom" Width="122" Command="locals:Precice.Automatski" ToolTip="Klikom na ovo dugme sva obavezna polja biće automatski popunjena podrazumevanim vrednostima">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonaautomatizacija22.png" Height="6"/>
+                <TextBlock VerticalAlignment="Center">Automatski popuni</TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

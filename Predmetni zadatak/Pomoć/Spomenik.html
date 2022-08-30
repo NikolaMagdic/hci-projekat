@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Spomenik</title>
+</head>
+<body>
+    <p>
+        <a href="index.html">Uvod i osnovne informacije aplikaciji</a><br />
+        <a href="TipSpomenika.html">Tipovi spomenika</a><br />
+        <a href="Etiketa.html">Etikete</a><br />
+        <a href="Spomenik.html">Spomenici</a><br />
+        <a href="DirektnaManipulacija.html">Mapa</a>
+    </p>
+    <h1>Spomenici i rad sa njima</h1>
+    <p>
+        Spomenik predstavlja neki konkretan spomenik prirode koji dodaje korisnik. Svaki spomenik može biti opisan po sledećim osobinama:
+    </p>
+    <ul>
+        <li>Oznaka - specificira je korisnik i mora biti uneta, mora imati najmanje 3 karaktera i mora biti jedinstvena</li>
+        <li>Ime - obavezan parametar koji mora biti uneti i imati najmanje 3 karaktera, ne mogu postojati 2 spomenika sa istim imenom</li>
+        <li>Opis - opciono se unosi i predstavlja neke dodatne značajne karakteristike spomenika</li>
+        <li>Tip - bira se iz ranije dodatih tipova koje je dodao korisnik, mora biti izabran</li>
+        <li>Klima - neobavezna, bira se jedna od predefinisanih:  polarna, kontinentalna, umereno-kontinentalna, pustinjska, suptropska, i tropska</li>
+        <li>Ikonica - mora postojati, ako je ne izabare korisnik automatski joj se dodaje ikonica njenog tipa</li>
+        <li>Ekološka ugroženost - u vidi polja za štikliranje</li>
+        <li>Stanište ugroženih vrsta - da li u regionu spomenika postoje ugrožene vrste, popunjava se polje za štikliranje</li>
+        <li>U naseljenom regionu - da li se spomenik prirode nalazi u blizinu ljudske postojbine, polje za štikliranje</li>
+        <li>Turistički status - opcion, bira se jedna od ponuđenih vrednosti: eksploatisan, dostupan, nedostupan</li>
+        <li>Prihod - obavezan parametar, ako se ne unese podrazumevani je da je 0, vrednost mu je u dolarima</li>
+        <li>Datum otkrivanja- obavezan parametar koji se bira iz kalendara. Ukoliko nije izabran biće izabran podrazumevani datum i to današnji dan</li>
+    </ul>
+    <p>
+        Spomenici se taguju etiketama prebacivanjem iz liste slobodnih u listu tagovanih i moguće je videti sve dostupne etikete prilikom
+        dodavanja ili izmene spomenika. Svaki spomenik može imati proizvoljno mnogo etiketa, i svaka etiketa se može dodeliti proizvoljno mnogo spomenika.
+    </p>
+    <p>
+        Prikaz spomenika <img src="../slike/pomocspomeniciprikaz.png"/>
+    </p>
+    <p>
+        Pritiskom na dugme Spomenici u meniju moguće je videti tabelarni prikaz svih dodatih spomenika, i njihovo sortiranje po unetim parametrima.
+        Takođe iz ovog prozora je omogućeno i dodavanje novih spomenika na dugme  <img src="../slike/pomocdodaj.png" /> ,
+         brisanje na dugme <img src="../slike/pomocobrisi.png" /> i izmena <img src="../slike/pomocizmeni.png" /> postojećih spomenika. Omogućena je i pretraga
+        <img src="../slike/pomocpretraga.png" /> i filtracija
+        po atributima u tabeli spomenika.
+        Za filtraciju je potrebno čekirati atribut po kome se želi filtrirati 
+        i u tekstualno polje ispod napisati željeni sadržaj.
+    <p>
+        <img src="../slike/pomocfiltriranjespomenik.png" />
+</body>
+</html>

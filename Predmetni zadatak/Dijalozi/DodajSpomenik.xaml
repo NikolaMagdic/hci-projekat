@@ -1,0 +1,174 @@
+﻿<Window x:Class="Predmetni_zadatak.Dijalozi.DodajSpomenik"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:Predmetni_zadatak.Dijalozi"
+        xmlns:val="clr-namespace:Predmetni_zadatak.Validacija"
+        xmlns:locals="clr-namespace:Predmetni_zadatak"
+        mc:Ignorable="d"
+        Title="Dodavanje spomenika" Height="521.5" Width="858.667"
+        Icon="/slike/globe48.png"
+        WindowStartupLocation="CenterScreen"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <Window.Resources>
+        <Style x:Key="MalaIkona" TargetType="Image">
+            <Setter Property="MaxWidth" Value="12"/>
+            <Setter Property="MaxHeight" Value="12"/>
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="locals:Precice.Potvrdi" CanExecute="Potvrdi_CanExecute" Executed="Potvrdi_Executed"></CommandBinding>
+        <CommandBinding Command="locals:Precice.Automatski" CanExecute="Automatski_CanExecute" Executed="Automatski_Executed"></CommandBinding>
+        <CommandBinding Command="locals:Precice.Izlaz" CanExecute="Izlaz_CanExecute" Executed="Izlaz_Executed"></CommandBinding>
+    </Window.CommandBindings>
+    
+    <Grid>
+        <Button x:Name="buttonDodaj" Content="Dodaj" HorizontalAlignment="Right" Margin="0,0,151,10" VerticalAlignment="Bottom" Width="76" Command="locals:Precice.Potvrdi" />
+        <Button x:Name="buttonOdustani" Content="Odustani" HorizontalAlignment="Right" Margin="0,0,32,10" VerticalAlignment="Bottom" Width="75" IsCancel="True"/>
+        <TextBlock x:Name="oz" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Oznaka" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxOznaka" HorizontalAlignment="Left" Height="23" Margin="155,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="textBoxOznaka_TextChanged" ToolTip="Jednoznačna oznaka spomenika">
+            <TextBox.Text>
+                <Binding Path="Oznaka" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:StringValidation ValidationStep="RawProposedValue"/>
+                        <val:JedinstvenaOznakaSpomenikValidation ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,44,0,0" TextWrapping="Wrap" Text="Ime" VerticalAlignment="Top" Height="17"/>
+        <TextBox x:Name="textBoxIme" HorizontalAlignment="Left" Height="23" Margin="155,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="textBoxIme_TextChanged" ToolTip="Jedinstveni naziv spomenika">
+            <TextBox.Text>
+                <Binding Path="Ime" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:StringValidation ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,75,0,0" TextWrapping="Wrap" Text="Opis" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxOpis" HorizontalAlignment="Left" Height="89" Margin="155,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" ToolTip="Dodatne informacije o spomeniku"/>
+        <TextBlock x:Name="textBlock10" HorizontalAlignment="Left" Margin="10,165,0,0" TextWrapping="Wrap" Text="Tip" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxTip" HorizontalAlignment="Left" Margin="155,165,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding TipoviSpomenika}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Ime}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="10,195,0,0" TextWrapping="Wrap" Text="Klima" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxKlima" HorizontalAlignment="Left" Margin="155,195,0,0" VerticalAlignment="Top" Width="120" ToolTip="Kakvi su klimatski uslovi na području spomenika"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="10,236,0,0" TextWrapping="Wrap" Text="Ikonica" VerticalAlignment="Top"/>
+        <Button x:Name="buttonIkonica" Content="Učitaj" HorizontalAlignment="Left" Margin="155,242,0,0" VerticalAlignment="Top" Width="76" Click="buttonIkonica_Click" ToolTip="Učitavanje željene ikonice iz fajl sistema"/>
+        <Image x:Name="slikaIkona" HorizontalAlignment="Left" Height="72" Margin="155,288,0,0" VerticalAlignment="Top" Width="70"></Image>
+        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="476,10,0,0" TextWrapping="Wrap" Text="Ugroženost" VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkBoxUgrozenost" Content="" HorizontalAlignment="Left" Margin="654,11,0,0" VerticalAlignment="Top" ToolTip="Da li je spomenik na neki način ugrožen?"/>
+        <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="476,45,0,0" TextWrapping="Wrap" Text="Stanište je ugroženih vrsta?" VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkBoxStaniste" Content="" HorizontalAlignment="Left" Margin="654,44,0,0" VerticalAlignment="Top" ToolTip="Da li na teritoriji spomenika postoje ugrožene biljne ili životinjske vrste?"/>
+        <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="476,75,0,0" TextWrapping="Wrap" Text="U naseljenom regionu?" VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkBoxRegion" Content="" HorizontalAlignment="Left" Margin="654,76,0,0" VerticalAlignment="Top" ToolTip="Da li je u blizini spomenika neko naselje?"/>
+        <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="476,109,0,0" TextWrapping="Wrap" Text="Turistički status" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxStatus" HorizontalAlignment="Left" Margin="654,109,0,0" VerticalAlignment="Top" Width="120" ToolTip="Jednoznačna oznaka spomenika"/>
+        <TextBlock x:Name="textBlockPrihod" HorizontalAlignment="Left" Margin="476,140,0,0" TextWrapping="Wrap" Text="Prihod (u $)" VerticalAlignment="Top" RenderTransformOrigin="0.893,0.909"/>
+        <TextBox x:Name="textBoxPrihod" HorizontalAlignment="Left" Height="22" Margin="654,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" ToolTip="Godišnja zarada od turizma">
+            <TextBox.Text>
+                <Binding Path="Prihod" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:StringToDoubleValidationRule ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+        <TextBlock x:Name="textBlock9" HorizontalAlignment="Left" Margin="476,182,0,0" TextWrapping="Wrap" Text="Datum otkrivanja" VerticalAlignment="Top"/>
+        <DatePicker x:Name="date" HorizontalAlignment="Left" Margin="654,182,0,0" VerticalAlignment="Top" Width="120" SelectedDate="{x:Static sys:DateTime.Now}">
+            <DatePicker.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="IsReadOnly" Value="False"/>
+                    <!--Da korisnik ne može da menja ručno datum, nego samo iz kalendara - sprečavanje greške-->
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <TextBlock x:Name="textBlock11" HorizontalAlignment="Left" Margin="654,223,0,0" TextWrapping="Wrap" Text="Tagovane etikete" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock12" HorizontalAlignment="Left" Margin="476,224,0,0" TextWrapping="Wrap" Text="Dostupne etikete" VerticalAlignment="Top"/>
+        <DataGrid x:Name="dgrTableEtiketeSlobodne" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="478,245,0,0" ItemsSource="{Binding EtiketeSlobodne}" IsReadOnly="True" AutoGenerateColumns="False" Height="154" Width="120" ToolTip="Etikete koje možete dodati ovom spomeniku">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Oznaka" Binding="{Binding Oznaka}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Boja">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <xctk:ColorPicker SelectedColor="{Binding Boja}" IsEnabled="False" ShowDropDownButton="False"></xctk:ColorPicker>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="dgrTableEtiketeDodate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="654,245,0,0" Width="120" ItemsSource="{Binding EtiketeDodate}" IsReadOnly="True" AutoGenerateColumns="False" Height="154" ToolTip="Etikete kojima je ovaj spomenik tagovan">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Oznaka" Binding="{Binding Oznaka}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Boja">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <xctk:ColorPicker SelectedColor="{Binding Boja}" IsEnabled="False" ShowDropDownButton="False"></xctk:ColorPicker>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="buttonPrebaci" Content="Prebaci" HorizontalAlignment="Left" Margin="409,288,0,0" VerticalAlignment="Top" Width="44" Height="28" Click="buttonPrebaci_Click" ToolTip="Prebacivanje iz liste dostupnih u listu tagovanih etiketa"/>
+        <Button x:Name="buttonVrati" Content="Vrati" Margin="409,341,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="44" Height="28" Click="buttonVrati_Click" ToolTip="Izbacivanje etiketa iz tagovanih etiketa spomenika"/>
+        <Button x:Name="buttonAutomatizacija" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="122" Command="locals:Precice.Automatski" ToolTip="Klikom na ovo dugme sva obavezna polja biće automatski popunjena podrazumevanim vrednostima">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonaautomatizacija22.png" Height="6"/>
+                <TextBlock VerticalAlignment="Center"><Run Text="Automatski popuni"/></TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

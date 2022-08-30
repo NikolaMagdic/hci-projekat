@@ -1,0 +1,86 @@
+﻿<Window x:Class="Predmetni_zadatak.Dijalozi.PrikazTipovaSpomenika"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Predmetni_zadatak.Dijalozi"
+        xmlns:locals="clr-namespace:Predmetni_zadatak"
+        xmlns:locald="clr-namespace:Predmetni_zadatak.Demo"
+        mc:Ignorable="d"
+        Title="Tipovi spomenika" Height="314" Width="600"
+        Icon="/slike/globe48.png"
+        WindowStartupLocation="CenterScreen">
+    <Window.CommandBindings>
+        <CommandBinding Command="locald:KomandaIzlaz.ExitDemo" CanExecute="ExitDemo_CanExecute" Executed="ExitDemo_Executed"></CommandBinding>
+        <CommandBinding Command="locals:Precice.DodajTip" CanExecute="DodajTip_CanExecute" Executed="DodajTip_Executed"></CommandBinding>
+        <CommandBinding Command="locals:Precice.Pomoc" CanExecute="Pomoc_CanExecute" Executed="Pomoc_Executed"></CommandBinding>
+        <CommandBinding Command="locals:Precice.Izlaz" CanExecute="Izlaz_CanExecute" Executed="Izlaz_Executed"></CommandBinding>
+    </Window.CommandBindings>
+    <Window.Resources>
+        <Style x:Key="MalaIkona" TargetType="Image">
+            <Setter Property="MaxWidth" Value="12"/>
+            <Setter Property="MaxHeight" Value="12"/>
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <DataGrid x:Name="dgrTabelaTipovaSpomenika" IsReadOnly="True" AutoGenerateColumns="False" Margin="10,10,136,66">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Oznaka" Binding="{Binding Oznaka}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Ime" Binding="{Binding Ime}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Ikona">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding PutanjaSlika}" Height="50" Width="50"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Opis" Binding="{Binding Opis}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button x:Name="buttonDodaj" HorizontalAlignment="Right" Margin="0,0,206,10" VerticalAlignment="Bottom" Width="76" ToolTip="Otvaranje prozora za dodavanje novog tipa spomenika (Ctrl+T)" Command="locals:Precice.DodajTip">
+            <StackPanel Orientation="Horizontal" Width="50">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonadodaj22.png"/>
+                <TextBlock VerticalAlignment="Center">Dodaj</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonIzmeni" HorizontalAlignment="Right" Margin="0,0,115,10" VerticalAlignment="Bottom" Width="74" Click="buttonIzmeni_Click">
+            <StackPanel Orientation="Horizontal" Width="50">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonaizmena22.png"/>
+                <TextBlock VerticalAlignment="Center">Izmeni</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonObrisi" HorizontalAlignment="Right" Margin="0,0,22,10" VerticalAlignment="Bottom" Width="76" Click="buttonObrisi_Click">
+            <StackPanel Orientation="Horizontal" Width="50">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonaobrisi22.png"/>
+                <TextBlock VerticalAlignment="Center">Obriši</TextBlock>
+            </StackPanel>
+        </Button>
+        <!--Filtriranje-->
+        <TextBlock x:Name="textBlockFiltracija" HorizontalAlignment="Right" Margin="0,15,20,0" TextWrapping="Wrap" Text="Filtriranje sadržaja:" VerticalAlignment="Top"/>
+        <RadioButton x:Name="radioButtonOznaka" GroupName="TipFilter" Content="Oznaka" HorizontalAlignment="Right" Margin="0,0,60,199" VerticalAlignment="Bottom"/>
+        <RadioButton x:Name="radioButtonIme" GroupName="TipFilter" Content="Ime" HorizontalAlignment="Right" Margin="0,0,79,162" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="textBoxFilter" HorizontalAlignment="Right" Height="23" Margin="0,136,23,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="95" TextChanged="textBoxFilter_TextChanged"/>
+        <!--Pretraga-->
+        <Button x:Name="buttonPretraga" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="103" Click="buttonPretraga_Click" ToolTip="Otvaranje prozora u kojem je moguće uneti parametre po kejima će se vršiti pretraga tipova spomenika u tabeli">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonapretraga22.png"/>
+                <TextBlock VerticalAlignment="Center">Pretraga</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonPonisti" HorizontalAlignment="Left" Margin="131,0,0,10" VerticalAlignment="Bottom" Width="103" Click="buttonPonisti_Click" ToolTip="Poništavanje rezultata pretrage i prikaz u tabeli svih tipova spomenika">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonaponistipretragu22.png"/>
+                <TextBlock VerticalAlignment="Center">Poništi pretragu</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonPomoc" HorizontalAlignment="Right" Margin="0,183,23,0" VerticalAlignment="Top" Width="75" ToolTip="Otvaranje prozora za pomoć (Ctrl+H)" Command="locals:Precice.Pomoc">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonapomoc22.png"/>
+                <TextBlock VerticalAlignment="Center"><Run Text="Pomoć"/></TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

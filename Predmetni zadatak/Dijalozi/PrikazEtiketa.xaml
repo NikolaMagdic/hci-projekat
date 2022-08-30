@@ -1,0 +1,86 @@
+﻿<Window x:Class="Predmetni_zadatak.Dijalozi.PrikazEtiketa"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:Predmetni_zadatak.Dijalozi"
+        xmlns:locals="clr-namespace:Predmetni_zadatak"
+        mc:Ignorable="d"
+        Title="Etikete" Height="300" Width="534.571"
+        Icon="/slike/globe48.png"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!--Stil za ikone-->
+        <Style x:Key="MalaIkona" TargetType="Image">
+            <Setter Property="MaxWidth" Value="12"/>
+            <Setter Property="MaxHeight" Value="12"/>
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="locals:Precice.DodajEtiketu" CanExecute="DodajEtiketu_CanExecute" Executed="DodajEtiketu_Executed"></CommandBinding>
+        <CommandBinding Command="locals:Precice.Pomoc" CanExecute="Pomoc_CanExecute" Executed="Pomoc_Executed"></CommandBinding>
+        <CommandBinding Command="locals:Precice.Izlaz" CanExecute="Izlaz_CanExecute" Executed="Izlaz_Executed"></CommandBinding>
+    </Window.CommandBindings>
+    
+    <Grid Margin="0,0,2,0">
+        <DataGrid x:Name="dgrTabelaEtiketa" IsReadOnly="True" AutoGenerateColumns="False" Margin="10,10,141,66" RenderTransformOrigin="1.669,0.969">
+            <DataGrid.Columns>
+                <!--Morao sam sam da definišem kolone da bi mogla boja da se pojavi kao kolona; AutoGenerateColumns na false-->
+                <DataGridTextColumn Header="Oznaka" Binding="{Binding Oznaka}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Boja">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <xctk:ColorPicker SelectedColor="{Binding Boja}" IsEnabled="False" ShowDropDownButton="False"></xctk:ColorPicker>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Opis" Binding="{Binding Opis}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button x:Name="buttonDodaj" HorizontalAlignment="Right" Margin="0,0,191,10" VerticalAlignment="Bottom" Width="75" ToolTip="Otvaranje prozora za dodavanje nove etikete (Ctrl+E)" Command="locals:Precice.DodajEtiketu" >
+            <StackPanel Orientation="Horizontal" Width="50">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonadodaj22.png"/>
+                <TextBlock VerticalAlignment="Center">Dodaj</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonIzmeni" HorizontalAlignment="Right" Margin="0,0,100,10" VerticalAlignment="Bottom" Width="75" Click="buttonIzmeni_Click">
+            <StackPanel Orientation="Horizontal" Width="50">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonaizmena22.png"/>
+                <TextBlock VerticalAlignment="Center">Izmeni</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonObrisi" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="buttonObrisi_Click">
+            <StackPanel Orientation="Horizontal" Width="50">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonaobrisi22.png"/>
+                <TextBlock VerticalAlignment="Center">Obriši</TextBlock>
+            </StackPanel>
+        </Button>
+        <!--Filtriranje-->
+        <TextBlock x:Name="textBlockFiltracija" HorizontalAlignment="Right" Margin="0,15,24,0" TextWrapping="Wrap" Text="Filtriranje sadržaja:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlockOznaka" HorizontalAlignment="Right" Margin="0,75,82,0" TextWrapping="Wrap" Text="Oznaka" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxFilter" HorizontalAlignment="Right" Height="23" Margin="0,96,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="112" TextChanged="textBoxFilter_TextChanged"/>
+        <!--Pretraga-->
+        <Button x:Name="buttonPretraga" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="103" Click="buttonPretraga_Click" ToolTip="Otvaranje prozora gde je moguć unos parametara po kojima će se pretražiti etikete u tabeli">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonapretraga22.png"/>
+                <TextBlock VerticalAlignment="Center">Pretraga</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonPonisti" HorizontalAlignment="Left" Margin="128,0,0,10" VerticalAlignment="Bottom" Width="103" Click="buttonPonisti_Click" ToolTip="Poništavanje rezultata pretrage i prikaz u tabeli svih etiketa">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonaponistipretragu22.png"/>
+                <TextBlock VerticalAlignment="Center">Poništi pretragu</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonPomoc" HorizontalAlignment="Right" Margin="0,183,10,0" VerticalAlignment="Top" Width="75" ToolTip="Otvaranje prozora za pomoć (Ctrl+H)" Command="locals:Precice.Pomoc">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{StaticResource ResourceKey=MalaIkona}" Source="/slike/ikonapomoc22.png"/>
+                <TextBlock VerticalAlignment="Center"><Run Text="Pomoć"/></TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>
